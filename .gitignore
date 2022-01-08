@@ -13,3 +13,4 @@
 !picom
 !picom/*
 !picom.conf
+!.bashrc
