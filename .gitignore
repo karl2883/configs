@@ -3,6 +3,7 @@
 !.gitignore
 
 !polybar
+!polybar/*
 !i3
 !kitty
 !nvim
