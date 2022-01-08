@@ -1,0 +1,180 @@
+[colors]
+background = #000000
+background-alt = #444
+foreground = #FFF
+foreground-alt = #555
+primary = #ffb52a
+secondary = #e60053
+alert = #bd2c40
+
+[bar/docked]
+inherit = bar/master
+monitor = ${env:SCREEN_RIGHT}
+dpi=84
+width = 1920
+height = 21
+
+[bar/1k]
+inherit = bar/master
+monitor = ${env:SCREEN_LAPTOP}
+dpi=84
+width = 1920
+height = 21
+
+[bar/4k]
+inherit = bar/master
+monitor = ${env:SCREEN_LAPTOP}
+dpi=168
+width = 3840x2160
+height = 42
+
+[bar/master]
+radius = 0
+fixed-center = false
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 3
+line-color = #f00
+
+padding-left = 0
+padding-right = 0
+
+border-bottom-size = 2
+border-bottom-color = #000000
+border-top-size = 2
+border-top-color = #000000
+
+module-margin-left = 1
+module-margin-right = 1
+
+font-0 = SF Mono:pixelsize=10;1
+font-1 = Font Awesome 5 Free:style=Solid:pixelsize=10;2
+font-2 = Font Awesome 5 Free:style=Regular;pixelsize=10;2
+font-3 = Noto Sans Mono CJK JP:style=Regular
+
+modules-left = i3
+modules-center = date
+modules-right = pulseaudio cpu memory filesystem wlan
+
+tray-position = right
+tray-padding = 0
+
+[module/i3]
+type = internal/i3
+format = <label-state> <label-mode>
+strip-wsnumbers = true
+wrapping-scroll = false
+
+; Only show workspaces on the same output as the bar
+;pin-workspaces = true
+
+label-mode-padding = 2
+label-mode-foreground = #000
+label-mode-background = ${colors.primary}
+
+; focused = Active workspace on focused monitor
+label-focused = %name%
+label-focused-background = ${colors.background-alt}
+label-focused-underline= ${colors.primary}
+label-focused-padding = 1
+
+; unfocused = Inactive workspace on any monitor
+label-unfocused = %name%
+label-unfocused-padding = 1
+
+; visible = Active workspace on unfocused monitor
+label-visible = %name%
+label-visible-background = ${self.label-focused-background}
+label-visible-underline = ${self.label-focused-underline}
+label-visible-padding = ${self.label-focused-padding}
+
+; urgent = Workspace with urgency hint set
+label-urgent = %name%
+label-urgent-background = ${colors.alert}
+label-urgent-padding = 1
+
+[module/filesystem]
+type = internal/fs
+mount-0 = /
+label-unmounted = %mountpoint% [404]
+label-mounted = %{F#70deff} %percentage_used%%
+
+[module/ccsize]
+type = custom/script
+
+exec = du -hd0 /opt/render | sed -e 's/\([0-9]*\)\(.\).*/%{F#deff70} \1 \2B/'
+interval = 1000
+
+[module/brightness]
+type = custom/script
+exec = polybar-brightness
+tail = true
+
+[module/cpu]
+type = internal/cpu
+interval = 5
+format-prefix = "%{F#ff7070} "
+label = %percentage%%
+
+[module/memory]
+type = internal/memory
+interval = 5
+label =%{F#9999ff} %percentage_used%%
+
+[module/wlan]
+type = internal/network
+interface = enp3s0
+interval = 5
+
+format-connected =%{F#c18fff}
+format-connected-underline = #000
+label-connected = %linkspeed%
+
+format-disconnected = %{F#AAAAAA}
+format-disconnected-underline = #f00
+
+[module/date]
+type = internal/date
+interval = 1
+
+date = "%{F#00ff00}%a, %d-%m-%y %{F#CC99ff}%R:%S"
+
+format-prefix-foreground = ${colors.foreground-alt}
+
+label = %date%
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+format-volume = %{F#ceff8f} <label-volume>
+label-volume = %percentage%%
+label-volume-foreground = #ceff8f
+
+label-muted =  
+label-muted-foreground = #AAA
+
+[module/day_percent]
+type = custom/script
+interval = 100
+format-prefix = "%{F#ffa269} "
+format = <label>% of Day
+exec = node -p "Math.round(10000*$(date -d "1970-01-01 UTC $(date +%T)" +%s)/86400)/100"
+    
+[module/qa]
+type = custom/script
+exec = polybar-questiond
+tail = true
+
+[settings]
+screenchange-reload = true
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
+;pseudo-transparency = true
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5
