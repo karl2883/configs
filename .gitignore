@@ -5,6 +5,7 @@
 !polybar
 !polybar/*
 !i3
+!i3/*
 !kitty
 !nvim
 !picom
