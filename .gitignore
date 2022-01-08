@@ -1,0 +1,10 @@
+*
+
+!.gitignore
+
+!polybar
+!i3
+!kitty
+!nvim
+!picom
+!picom.conf
