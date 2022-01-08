@@ -7,6 +7,9 @@
 !i3
 !i3/*
 !kitty
+!kitty/*
 !nvim
+!nvim/*
 !picom
+!picom/*
 !picom.conf
