@@ -2,7 +2,10 @@ autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 source $HOME/.config/nvim/plug-config/coc.vim
 
+
 call plug#begin('~/.vim/plugged')
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 Plug 'bfrg/vim-cpp-modern'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'akinsho/toggleterm.nvim'
@@ -12,6 +15,7 @@ Plug 'drewtempelmeyer/palenight.vim'
 Plug 'vim-syntastic/syntastic'
 Plug 'sheerun/vim-polyglot'
 call plug#end()
+
 
 set nocompatible
 filetype on
@@ -34,7 +38,16 @@ colorscheme palenight
 set clipboard+=unnamedplus
 highlight LineNr ctermfg=darkgrey cterm=bold
 
+lua << EOF
+require('telescope').setup{
+    defaults = {
+        file_ignore_patterns={"%.o"},
+    }
+}
+EOF
+
 command R w | TermExec size=100 direction=vertical cmd="vimrun %:t"
+command D nohl
 nnoremap <C-q> :ToggleTerm<CR>
 
 nmap <c-c> <esc>
@@ -42,6 +55,7 @@ imap <c-c> <esc>
 vmap <c-c> <esc>
 omap <c-c> <esc>
 
+nmap ff :lua require'telescope.builtin'.find_files{}<CR>
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
@@ -67,5 +81,7 @@ autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
 nnoremap <C-t> :NERDTreeToggle<CR>
 nnoremap <C-x> :bn<CR>
 nnoremap <C-y> :bp<CR>
+nnoremap <C-h> :CocCommand clangd.switchSourceHeader<CR>
+
 autocmd VimResized * wincmd =
 set updatetime=300

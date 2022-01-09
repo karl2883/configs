@@ -219,5 +219,5 @@ bindsym $mod+$alt+v exec code
 # startup applications
 exec kitty
 exec google-chrome-stable
-exec --no-startup-id i3-msg "exec sleep 5; workspace 3:Code (3); exec kitty; exec discord"
+exec --no-startup-id i3-msg "exec sleep 5; workspace 3:Code (3); exec kitty -d ~/programming/c++/algorithms/sorting; exec discord"
 
