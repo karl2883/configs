@@ -4,6 +4,7 @@ source $HOME/.config/nvim/plug-config/coc.vim
 
 
 call plug#begin('~/.vim/plugged')
+Plug 'sickill/vim-pasta'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'bfrg/vim-cpp-modern'
@@ -15,6 +16,11 @@ Plug 'drewtempelmeyer/palenight.vim'
 Plug 'vim-syntastic/syntastic'
 Plug 'sheerun/vim-polyglot'
 call plug#end()
+
+function SaveAndRun()
+    :w # When you do :w | :vs <...> it doesn't work very nicely, the saving prevents an update of the terminal window for a short time
+    :vs | :term vimrun %:t
+endfunction
 
 
 set nocompatible
@@ -33,6 +39,8 @@ set showcmd
 set showmode
 set showmatch
 set hlsearch
+set splitright
+set splitbelow
 set background=dark
 colorscheme palenight
 set clipboard+=unnamedplus
@@ -46,8 +54,8 @@ require('telescope').setup{
 }
 EOF
 
-command R w | TermExec size=100 direction=vertical cmd="vimrun %:t"
 command D nohl
+command R exec SaveAndRun()
 nnoremap <C-q> :ToggleTerm<CR>
 
 nmap <c-c> <esc>
@@ -56,6 +64,7 @@ vmap <c-c> <esc>
 omap <c-c> <esc>
 
 nmap ff :lua require'telescope.builtin'.find_files{}<CR>
+nmap fg :lua require'telescope.builtin'.grep_string{}<CR>
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
@@ -82,6 +91,13 @@ nnoremap <C-t> :NERDTreeToggle<CR>
 nnoremap <C-x> :bn<CR>
 nnoremap <C-y> :bp<CR>
 nnoremap <C-h> :CocCommand clangd.switchSourceHeader<CR>
+tnoremap <Esc> <C-\><C-n>
+tnoremap <C-l> <C-\><C-n><C-w>w
+nnoremap <C-l> <C-\><C-n><C-w>w
+inoremap <C-l> <C-\><C-n><C-w>w
+
 
 autocmd VimResized * wincmd =
-set updatetime=300
+autocmd TermOpen * startinsert
+autocmd TermOpen * setlocal nonumber norelativenumber
+set updatetime=50

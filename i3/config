@@ -66,10 +66,10 @@ bindsym $mod+d exec dmenu_run
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
-bindsym $mod+h focus left
-bindsym $mod+j focus down
-bindsym $mod+k focus up
-bindsym $mod+l focus right
+bindsym $mod+$alt+h focus left
+bindsym $mod+$alt+j focus down
+bindsym $mod+$alt+k focus up
+bindsym $mod+$alt+l focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -78,10 +78,10 @@ bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+odiaeresis move right
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -126,12 +126,12 @@ set $ws9 "9"
 set $ws10 "10"
 
 # switch to workspace
-bindsym $mod+1 workspace $ws1
-bindsym $mod+2 workspace $ws2
-bindsym $mod+3 workspace $ws3
-bindsym $mod+4 workspace $ws4
-bindsym $mod+5 workspace $ws5
-bindsym $mod+6 workspace $ws6
+bindsym $mod+h workspace $ws1
+bindsym $mod+j workspace $ws2
+bindsym $mod+k workspace $ws3
+bindsym $mod+l workspace $ws4
+bindsym $mod+odiaeresis workspace $ws5
+bindsym $mod+adiaeresis workspace $ws6
 bindsym $mod+7 workspace number $ws7
 bindsym $mod+8 workspace number $ws8
 bindsym $mod+9 workspace number $ws9
@@ -215,6 +215,9 @@ bindsym $mod+$alt+d exec discord
 
 # Shortcut for VSCode
 bindsym $mod+$alt+v exec code
+
+# Shortcut for Network CLI
+bindsym $mod+Shift+w exec nm-connection-editor
 
 # startup applications
 exec kitty
